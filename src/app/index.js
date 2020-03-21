@@ -9,11 +9,13 @@ class App {
 
     middlewares() {
         this.app.use(express.json());
-
     }
 
     routes() { 
         this.app.use(require("./routes"));
+    }
+    apiValidation() {
+
     }
 }
 

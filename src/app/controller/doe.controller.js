@@ -1,6 +1,12 @@
+const service = require("../../core/validation/GoogleAPIValidation");
 class DoeController {
     async doeReturn(req, res) {
-        return res.status(200).send("DOE")
+        try {
+            let content = await service.authorize();
+            return res.status(200).json(content)
+        } catch (error) {
+            res.status(500).error("BITCH");
+        }
     }
     async insertSomethingReturn(req, res) {
         let { body } = req;
