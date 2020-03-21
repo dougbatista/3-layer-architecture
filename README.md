@@ -1,6 +1,6 @@
 ## 3 Layer architecture  ( Route -> Controller -> Services ) 🥪
 
-   src
+   ** src **
    - index.js   -> App entry point
    - server.js  -> Server status
    - app             
