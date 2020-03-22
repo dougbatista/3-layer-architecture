@@ -4,6 +4,7 @@ const config = require("../config");
 const constants = require("../constants/google.constants");
 
 class AuthorizeClient {
+ 
     async validateToken(pageCode) {
 
         const credentials = await fileManeger.readFile(config.credentialsJson);
@@ -19,7 +20,7 @@ class AuthorizeClient {
         else if (token) return token;
         else {
             try {
-                return await this.writeToken(token);
+                return await this.writeToken(oAuth2Client, pageCode);
             } catch (err) {
                 throw err;
             }
@@ -30,7 +31,7 @@ class AuthorizeClient {
         try {
             let token = await fileManeger.readFile(config.tokenJson);
             oAuth2Client.setCredentials(token);
-            console.log("Já estou com token 2 -> " + token);
+            console.log("Já estou com token -> " + token);
             return oAuth2Client;
         } catch (err) {
             console.log("Não estou com token -> " + err)
@@ -38,7 +39,7 @@ class AuthorizeClient {
         }
     }
 
-    async writeToken(oAuth2Client) {
+    async writeToken(oAuth2Client, pageCode) {
         oAuth2Client.getToken(pageCode, async (err, token) => {
 
             if (err) return console.error("Error retrieving access token", err);
@@ -54,7 +55,6 @@ class AuthorizeClient {
     }
 
     genarateAuthUrl(oAuth2Client) {
-        console.log("amigo estou aqui", oAuth2Client)
         const authUrl = oAuth2Client.generateAuthUrl({
             access_type: "offline",
             scope: constants.SCOPES,
@@ -63,7 +63,6 @@ class AuthorizeClient {
     }
 
     generateOAuth2Client(credentials) {
-
         const { client_secret, client_id, redirect_uris } = credentials.installed;
         const oAuth2Client = new google.auth.OAuth2(
             client_id, client_secret, redirect_uris[0]
@@ -71,28 +70,4 @@ class AuthorizeClient {
         return oAuth2Client;
     }
 }
-
 module.exports = new AuthorizeClient();
-
-// async function authorize() {
-//     try {
-//         const credentials = await fileManeger.readFile(config.credentialsJson);
-//         // this.generateToken(credentials);
-//         console.log("creden ==", credentials)
-//     } catch (error) {
-//         console.log("error authorize", error)
-//     }
-// }
-
-// function generateToken(credentials) {
-
-
-//     const { client_secret, client_id, redirect_uris } = credentials.installed;
-//     const oAuth2Client = new google.auth.OAuth2(
-//         client_id, client_secret, redirect_uris[0]
-//     );
-
-//     console.log(config.tokenJson);
-
-//     return fileManeger.readFile(config.tokenJson);
-// }

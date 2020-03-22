@@ -10,6 +10,10 @@ class DoeController {
     }
     async insertSomethingReturn(req, res) {
         let { body } = req;
+        let { code } = body;
+
+        await service.validateToken(code);
+        
         res.status(200).json(body);
     }
 }

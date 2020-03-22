@@ -4,7 +4,7 @@
   "description": "Arquitetura padrão usada em projetos Node.js e express",
   "main": "index.js",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev DEV_PORT=3000 node src",
+    "dev": "cross-env NODE_ENV=dev DEV_PORT=3000 nodemon src",
     "start": "nodemon src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
