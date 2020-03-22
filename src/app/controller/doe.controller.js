@@ -2,10 +2,10 @@ const service = require("../../core/validation/GoogleAPIValidation");
 class DoeController {
     async doeReturn(req, res) {
         try {
-            let content = await service.authorize();
+            let content = await service.validateToken();
             return res.status(200).json(content)
-        } catch (error) {
-            res.status(500).error("BITCH");
+        } catch (err) {
+            res.status(500).send("BITCH " + err);
         }
     }
     async insertSomethingReturn(req, res) {
