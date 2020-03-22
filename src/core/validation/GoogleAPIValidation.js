@@ -10,13 +10,13 @@ class AuthorizeClient {
         let oAuth2Client = this.generateOAuth2Client(credentials);
         let token = await this.tokenCheck(oAuth2Client);
 
-        if (!token && !pageCode)
+        if (!token && !pageCode) {
             return {
                 authUrl: this.genarateAuthUrl(oAuth2Client),
                 message: "Authorize this app by visiting this url: "
             };
-        else if (token)
-            return token;
+        }
+        else if (token) return token;
         else {
             try {
                 return await this.writeToken(token);
